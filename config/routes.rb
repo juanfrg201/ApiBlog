@@ -3,6 +3,9 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :sessions, only: [:create, :destroy]
+      devise_for :users, controllers: {
+        registrations: 'api/v1/registrations'
+      }
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

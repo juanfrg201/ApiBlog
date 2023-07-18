@@ -8,6 +8,11 @@ Rails.application.routes.draw do
       devise_for :users, controllers: {
         registrations: 'api/v1/registrations'
       }
+      namespace :user do
+        namespace :blogs do
+          resources :user_blogs, only: [:index]
+        end
+      end
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

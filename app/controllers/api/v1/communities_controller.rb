@@ -15,10 +15,9 @@ class Api::V1::CommunitiesController < ApplicationController
 
   # POST /api/v1/communities
   def create
-    user = User.find_by(authentication_token: api_v1_community_params[:token])
+    user = User.find_by(id: api_v1_community_params[:user_id])
     if user.present? 
-      @api_v1_community = Api::V1::Community.new(name: api_v1_community_params[:name], user_id: user.id)
-
+      @api_v1_community = Api::V1::Community.new(name: api_v1_community_params[:name], user_id: user.id, description:api_v1_community_params[:description])
       if @api_v1_community.save
         render json: @api_v1_community, status: :created, location: @api_v1_community
       else
@@ -49,6 +48,6 @@ class Api::V1::CommunitiesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def api_v1_community_params
-      params.permit(:name, :token)
+      params.require(:community).permit(:name, :user_id, :description)
     end
 end

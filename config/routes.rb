@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :communities
       resources :blogs
+      resources :comments, only: [:create, :index]
       resources :sessions, only: [:create, :destroy]
       devise_for :users, controllers: {
         registrations: 'api/v1/registrations'

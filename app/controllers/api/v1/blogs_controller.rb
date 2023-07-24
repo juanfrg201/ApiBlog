@@ -15,7 +15,8 @@ class Api::V1::BlogsController < ApplicationController
 
   # POST /api/v1/blogs
   def create
-    user = User.find_by(authentication_token: api_v1_blog_params[:token])
+    user = User.find_by(id: api_v1_blog_params[:user_id])
+    puts api_v1_blog_params[:user_id]
     if user.present?
       @api_v1_blog = Api::V1::Blog.new(title: api_v1_blog_params[:title], body: api_v1_blog_params[:body], user_id: user.id)
       if @api_v1_blog.save
@@ -48,6 +49,6 @@ class Api::V1::BlogsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def api_v1_blog_params
-      params.permit(:title, :body, :token)
+      params.require(:blog).permit(:title, :body, :user_id)
     end
 end
